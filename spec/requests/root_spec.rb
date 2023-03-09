@@ -1,5 +1,3 @@
-# spec/requests/root_spec.rb
-
 RSpec.describe "Root", type: :request do
   it "is successful" do
     get "/"
