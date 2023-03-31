@@ -6,7 +6,14 @@ module Bookshelf
       class Index < Bookshelf::Action
         include Deps["persistence.rom"]
 
+        params do
+          optional(:page).value(:integer, gt?: 0)
+          optional(:per_page).value(:integer, gt?: 0, lteq?: 100)
+        end
+
         def handle(request, response)
+          halt 422 unless request.params.valid?
+
           books = rom.relations[:books]
             .select(:title, :author)
             .order(:title)
