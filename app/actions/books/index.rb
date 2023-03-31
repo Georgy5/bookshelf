@@ -12,7 +12,7 @@ module Bookshelf
         end
 
         def handle(request, response)
-          halt 422 unless request.params.valid?
+          halt 422, {errors: request.params.errors}.to_json unless request.params.valid?
 
           books = rom.relations[:books]
             .select(:title, :author)
