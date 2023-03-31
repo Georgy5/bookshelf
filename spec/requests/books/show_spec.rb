@@ -1,7 +1,7 @@
 RSpec.describe "GET /books/:id", type: [:request, :database] do
   let(:books) { app["persistence.rom"].relations[:books] }
 
-  context "when a book matches a given id" do
+  context "when a book matches the given id" do
     let!(:book_id) do
       books.insert(title: "Test Driven Development", author: "Kent Beck")
     end
@@ -10,7 +10,7 @@ RSpec.describe "GET /books/:id", type: [:request, :database] do
       get "/books/#{book_id}"
 
       expect(last_response).to be_successful
-      expect(last_response.content).to eq("application/json; charset=utf-8")
+      expect(last_response.content_type).to eq("application/json; charset=utf-8")
 
       response_body = JSON.parse(last_response.body)
 
@@ -22,10 +22,10 @@ RSpec.describe "GET /books/:id", type: [:request, :database] do
 
   context "when no book matches the given id" do
     it "returns not found" do
-      get "/books/#{book.max(:id).to_i + 1}"
+      get "/books/#{books.max(:id).to_i + 1}"
 
       expect(last_response).to be_not_found
-      expect(last_response.content).to eq("application/json; charset=utf-8")
+      expect(last_response.content_type).to eq("application/json; charset=utf-8")
 
       response_body = JSON.parse(last_response.body)
 
