@@ -17,6 +17,7 @@ gem "pg"
 
 group :development, :test do
   gem "dotenv"
+  gem "faker"
 end
 
 group :cli, :development do
